@@ -1,0 +1,35 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:converter="clr-namespace:GraphicEditor.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="200" d:DesignHeight="450"
+             x:Class="GraphicEditor.Views.SettingsPanels.StraightLineView">
+	<UserControl.Resources>
+		<converter:StringToPointConverter x:Key="stringToPointConverter"/>
+	</UserControl.Resources>
+	<Grid ColumnDefinitions="0.4*, 0.6*" RowDefinitions="*,*,*,*,*" HorizontalAlignment="Stretch" Margin="5,25,5,5">
+		<Grid.Styles>
+			<StyleInclude Source="/Assets/SettingsPanelStyles.axaml"/>
+		</Grid.Styles>
+		<TextBlock Grid.Column="0" Grid.Row="0" Text="Имя:"/>
+		<TextBlock Grid.Column="0" Grid.Row="1" Text="Начальная точка:"/>
+		<TextBlock Grid.Column="0" Grid.Row="2" Text="Конечная точка:"/>
+		<TextBlock Grid.Column="0" Grid.Row="3" Text="Цвет линии:"/>
+		<TextBlock Grid.Column="0" Grid.Row="4" Text="Толщина линии:"/>
+		<TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Name}"/>
+		<TextBox Grid.Column="1" Grid.Row="1" Text="{Binding StartPoint, Converter={StaticResource stringToPointConverter}}"/>
+		<TextBox Grid.Column="1" Grid.Row="2" Text="{Binding EndPoint, Converter={StaticResource stringToPointConverter}}"/>
+		<ComboBox Grid.Column="1" Grid.Row="3" Items="{Binding Colors}" SelectedItem="{Binding StrokeColor}">
+			<ComboBox.DataTemplates>
+				<DataTemplate>
+					<!--<TextBlock Background="{Binding Color}" Text="{Binding Name}"/>-->
+				<Rectangle Fill="{Binding Color}" Width="100" Height="15"/>
+				</DataTemplate>
+			</ComboBox.DataTemplates>
+		</ComboBox>
+		<NumericUpDown Grid.Column="1" Grid.Row="4" Value="{Binding StrokeThickness}"/>
+	</Grid>
+	
+
+</UserControl>

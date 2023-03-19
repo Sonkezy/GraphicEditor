@@ -1,0 +1,60 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:GraphicEditor.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="GraphicEditor.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="GraphicEditor">
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+	
+	<Grid ShowGridLines="False" ColumnDefinitions="0.25*,0.60*,0.15*">
+		<Grid ShowGridLines="{Binding $parent.ShowGridLines}" Grid.Column="0" RowDefinitions="29, *, 29">
+			<Grid.Styles>
+				<StyleInclude Source="/Assets/CustomStyles.axaml"/>
+			</Grid.Styles>
+			<ComboBox Grid.Row="0" SelectedItem="{Binding Content}" Items="{Binding	VmbaseCollection}">
+				<ComboBox.DataTemplates>
+					<DataTemplate>
+						<TextBlock Text="{Binding ViewName}"/>
+					</DataTemplate>
+				</ComboBox.DataTemplates>
+			</ComboBox>
+			
+			<ContentControl VerticalContentAlignment="Top" HorizontalContentAlignment="Stretch"
+					Grid.Row="1" Content="{Binding Content}"/>
+			<Grid Grid.Row="2" ColumnDefinitions="*,*">
+				<Button Name="buttonAdd" Grid.Column="0"  
+						Content="Добавить" Command="{Binding buttonAdd}"></Button>
+				<Button Name="buttonClear" Grid.Column="1"  
+						Content="Сброс" Command="{Binding buttonClear}"></Button>
+			</Grid>			
+		</Grid>
+		<ItemsControl Grid.Column="1" Items="{Binding Path=Shapes}">
+			<ItemsControl.ItemsPanel>
+				<ItemsPanelTemplate>
+					<Canvas>
+						
+					</Canvas>
+				</ItemsPanelTemplate>
+			</ItemsControl.ItemsPanel>
+		</ItemsControl>
+		<ListBox Grid.Column="2" Items="{Binding ShapesName}" VirtualizationMode="None">
+				<!--<ListBox.ItemTemplate>
+					<DataTemplate>
+						<Grid ColumnDefinitions="3*, *">
+							<TextBlock Grid.Column="0" Text="{Binding Name}" />
+							<Button Grid.Column="1" Command="{Binding $parent[ListBox].DataContext.buttonRemove}" CommandParameter="{Binding}" Content="Remove"/>
+						</Grid>
+					<TextBlock Text="{Binding Name}" />
+					</DataTemplate>
+				</ListBox.ItemTemplate>-->
+		</ListBox>
+	</Grid>
+</Window>

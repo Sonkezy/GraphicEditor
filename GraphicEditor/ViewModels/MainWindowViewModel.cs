@@ -26,10 +26,10 @@ namespace GraphicEditor.ViewModels
         {
             IBrush stroke = Brushes.Red;
             Line line = new Line {Name="line01", StartPoint = new Point(0, 0), EndPoint = new Point(100, 100), Stroke = stroke, StrokeThickness = 5 };
-            Shapes.Add(line);
+           // Shapes.Add(line);
             ShapesName.Add(line.Name);
             line = new Line { Name = "line02", StartPoint = new Point(10, 50), EndPoint = new Point(200, 200), Stroke = Brushes.Green, StrokeThickness = 5 };
-            Shapes.Add(line);
+           // Shapes.Add(line);
             ShapesName.Add(line.Name);
             vmbaseCollection = new ObservableCollection<ViewModelBase>();
             vmbaseCollection.Add(new StraightLineViewModel());

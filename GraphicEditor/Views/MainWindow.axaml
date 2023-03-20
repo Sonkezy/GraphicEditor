@@ -36,7 +36,7 @@
 						Content="Сброс" Command="{Binding buttonClear}"></Button>
 			</Grid>			
 		</Grid>
-		<ItemsControl Grid.Column="1" Items="{Binding Path=Shapes}">
+		<ItemsControl Grid.Column="1" Items="{Binding Shapes}">
 			<ItemsControl.ItemsPanel>
 				<ItemsPanelTemplate>
 					<Canvas>
@@ -45,16 +45,7 @@
 				</ItemsPanelTemplate>
 			</ItemsControl.ItemsPanel>
 		</ItemsControl>
-		<ListBox Grid.Column="2" Items="{Binding ShapesName}" VirtualizationMode="None">
-				<!--<ListBox.ItemTemplate>
-					<DataTemplate>
-						<Grid ColumnDefinitions="3*, *">
-							<TextBlock Grid.Column="0" Text="{Binding Name}" />
-							<Button Grid.Column="1" Command="{Binding $parent[ListBox].DataContext.buttonRemove}" CommandParameter="{Binding}" Content="Remove"/>
-						</Grid>
-					<TextBlock Text="{Binding Name}" />
-					</DataTemplate>
-				</ListBox.ItemTemplate>-->
+		<ListBox Grid.Column="2" Items="{Binding Shapes}" VirtualizationMode="None">
 		</ListBox>
 	</Grid>
 </Window>

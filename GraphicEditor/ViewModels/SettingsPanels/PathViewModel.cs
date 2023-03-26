@@ -11,39 +11,40 @@ using System.Threading.Tasks;
 
 namespace GraphicEditor.ViewModels.SettingsPanels
 {
-    public class StraightLineViewModel : ShapeViewModelBase 
+    public class PathViewModel : ShapeViewModelBase
     {
-        public string ViewName => "Прямая линия";
+        public string ViewName => "Составная фигура";
         string name;
-        Point startPoint;
-        Point endPoint;
+        string commands;
+        ISolidColorBrush fillColor;
         ISolidColorBrush strokeColor;
         ushort strokeThickness;
         ObservableCollection<ISolidColorBrush> colors;
-
-        public StraightLineViewModel() 
+        public PathViewModel()
         {
             var brushes = typeof(Brushes).GetProperties().Select(brush => (ISolidColorBrush)brush.GetValue(brush));
             Colors = new ObservableCollection<ISolidColorBrush>(brushes);
             Name = "";
-            StartPoint = new Point(0, 0);
-            EndPoint = new Point(0, 0);
+            Commands = "";
             StrokeThickness = 1;
             StrokeColor = Colors[0];
+            FillColor = Colors[0];
 
         }
         public override PaintShape? GetShape()
         {
-            if(Name != "" && StrokeThickness > 0)
+            if (Name != "")
             {
-                if (StartPoint.Y != 0 && StartPoint.X != 0 || EndPoint.X != 0 && EndPoint.Y != 0)
+                if (Commands.Length > 0)
                 {
-                    return new PaintStraightLine { 
+                    return new PaintPath
+                    {
                         Name = Name,
-                        StartPoint = StartPoint,
-                        EndPoint = EndPoint,
+                        Commands = Commands,
+                        Data = Geometry.Parse(Commands),
+                        FillColor = FillColor.Color,
                         StrokeColor = StrokeColor.Color,
-                        StrokeThickness = StrokeThickness
+                        StrokeThickness = StrokeThickness,
                     };
                 }
             }
@@ -52,25 +53,20 @@ namespace GraphicEditor.ViewModels.SettingsPanels
         public override void ClearShape()
         {
             Name = "";
-            StartPoint = new Point(0, 0);
-            EndPoint = new Point(0, 0);
+            commands = "";
             StrokeThickness = 1;
             StrokeColor = Colors[0];
+            FillColor = Colors[0];
         }
         public string Name
         {
             get => name;
             set => this.RaiseAndSetIfChanged(ref name, value);
         }
-        public Point StartPoint
+        public string Commands
         {
-            get => startPoint;
-            set => this.RaiseAndSetIfChanged(ref startPoint, value);
-        }
-        public Point EndPoint
-        {
-            get => endPoint;
-            set => this.RaiseAndSetIfChanged(ref endPoint, value);
+            get => commands;
+            set => this.RaiseAndSetIfChanged(ref commands, value);
         }
         public ISolidColorBrush StrokeColor
         {
@@ -78,6 +74,14 @@ namespace GraphicEditor.ViewModels.SettingsPanels
             set
             {
                 this.RaiseAndSetIfChanged(ref strokeColor, value);
+            }
+        }
+        public ISolidColorBrush FillColor
+        {
+            get => fillColor;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref fillColor, value);
             }
         }
         public ushort StrokeThickness

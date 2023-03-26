@@ -2,6 +2,7 @@
 using Avalonia.Media;
 using GraphicEditor.Models;
 using ReactiveUI;
+using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,37 +12,43 @@ using System.Threading.Tasks;
 
 namespace GraphicEditor.ViewModels.SettingsPanels
 {
-    public class StraightLineViewModel : ShapeViewModelBase 
+    public class EllipseViewModel : ShapeViewModelBase
     {
-        public string ViewName => "Прямая линия";
+        public string ViewName => "Эллипс";
         string name;
         Point startPoint;
-        Point endPoint;
+        int width, height;
+        ISolidColorBrush fillColor;
         ISolidColorBrush strokeColor;
         ushort strokeThickness;
         ObservableCollection<ISolidColorBrush> colors;
 
-        public StraightLineViewModel() 
+        public EllipseViewModel()
         {
             var brushes = typeof(Brushes).GetProperties().Select(brush => (ISolidColorBrush)brush.GetValue(brush));
             Colors = new ObservableCollection<ISolidColorBrush>(brushes);
             Name = "";
             StartPoint = new Point(0, 0);
-            EndPoint = new Point(0, 0);
+            Width = 0;
+            Height = 0;
             StrokeThickness = 1;
             StrokeColor = Colors[0];
+            FillColor = Colors[0];
 
         }
         public override PaintShape? GetShape()
         {
-            if(Name != "" && StrokeThickness > 0)
+            if (Name != "")
             {
-                if (StartPoint.Y != 0 && StartPoint.X != 0 || EndPoint.X != 0 && EndPoint.Y != 0)
+                if (StartPoint.Y != 0 && StartPoint.X != 0 && Width != 0 && Height !=0)
                 {
-                    return new PaintStraightLine { 
+                    return new PaintEllipse
+                    {
                         Name = Name,
                         StartPoint = StartPoint,
-                        EndPoint = EndPoint,
+                        Width = Width,
+                        Height = Height,
+                        FillColor = FillColor.Color,
                         StrokeColor = StrokeColor.Color,
                         StrokeThickness = StrokeThickness
                     };
@@ -53,9 +60,9 @@ namespace GraphicEditor.ViewModels.SettingsPanels
         {
             Name = "";
             StartPoint = new Point(0, 0);
-            EndPoint = new Point(0, 0);
             StrokeThickness = 1;
             StrokeColor = Colors[0];
+            FillColor = Colors[0];
         }
         public string Name
         {
@@ -67,10 +74,15 @@ namespace GraphicEditor.ViewModels.SettingsPanels
             get => startPoint;
             set => this.RaiseAndSetIfChanged(ref startPoint, value);
         }
-        public Point EndPoint
+        public int Width
         {
-            get => endPoint;
-            set => this.RaiseAndSetIfChanged(ref endPoint, value);
+            get => width;
+            set => this.RaiseAndSetIfChanged(ref width, value);
+        }
+        public int Height
+        {
+            get => height;
+            set => this.RaiseAndSetIfChanged(ref height, value);
         }
         public ISolidColorBrush StrokeColor
         {
@@ -78,6 +90,14 @@ namespace GraphicEditor.ViewModels.SettingsPanels
             set
             {
                 this.RaiseAndSetIfChanged(ref strokeColor, value);
+            }
+        }
+        public ISolidColorBrush FillColor
+        {
+            get => fillColor;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref fillColor, value);
             }
         }
         public ushort StrokeThickness

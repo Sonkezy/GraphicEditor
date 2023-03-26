@@ -2,26 +2,24 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			 xmlns:converter="clr-namespace:GraphicEditor.ViewModels.Converters"
-             mc:Ignorable="d" d:DesignWidth="200" d:DesignHeight="450"
-             x:Class="GraphicEditor.Views.SettingsPanels.StraightLineView">
+             xmlns:converter="clr-namespace:GraphicEditor.ViewModels.Converters"
+			 mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="450"
+             x:Class="GraphicEditor.Views.SettingsPanels.PolylineView">
 	<UserControl.Resources>
-		<converter:StringToPointConverter x:Key="stringToPointConverter"/>
+		<converter:StringToPointsConverter x:Key="stringToPointsConverter"/>
 		<converter:ColorToBrushConverter x:Key="colorToBrushConverter"/>
 	</UserControl.Resources>
-	
+
 	<Grid ColumnDefinitions="0.4*, 0.6*" RowDefinitions="*,*,*,*,*" HorizontalAlignment="Stretch" Margin="5,25,5,5">
 		<Grid.Styles>
 			<StyleInclude Source="/Assets/SettingsPanelStyles.axaml"/>
 		</Grid.Styles>
 		<TextBlock Grid.Column="0" Grid.Row="0" Text="Имя:"/>
-		<TextBlock Grid.Column="0" Grid.Row="1" Text="Начальная точка:"/>
-		<TextBlock Grid.Column="0" Grid.Row="2" Text="Конечная точка:"/>
+		<TextBlock Grid.Column="0" Grid.Row="1" Text="Точки:"/>
 		<TextBlock Grid.Column="0" Grid.Row="3" Text="Цвет линии:"/>
 		<TextBlock Grid.Column="0" Grid.Row="4" Text="Толщина линии:"/>
 		<TextBox Name="textBoxName" Grid.Column="1" Grid.Row="0" Text="{Binding Name}"/>
-		<TextBox Name="textBoxStart" Grid.Column="1" Grid.Row="1" Text="{Binding StartPoint, Converter={StaticResource stringToPointConverter}}"/>
-		<TextBox Name="textBoxEnd" Grid.Column="1" Grid.Row="2" Text="{Binding EndPoint, Converter={StaticResource stringToPointConverter}}"/>
+		<TextBox Name="textBoxPoints" Grid.Column="1" Grid.Row="1" Text="{Binding Points, Converter={StaticResource stringToPointsConverter}}"/>
 		<ComboBox Name="comboBoxColor" Grid.Column="1" Grid.Row="3" Items="{Binding Colors}" SelectedItem="{Binding StrokeColor}">
 			<ComboBox.DataTemplates>
 				<DataTemplate>
@@ -31,6 +29,4 @@
 		</ComboBox>
 		<NumericUpDown Name="numericUpDownStroke" Grid.Column="1" Grid.Row="4" Value="{Binding StrokeThickness}"/>
 	</Grid>
-	
-
 </UserControl>

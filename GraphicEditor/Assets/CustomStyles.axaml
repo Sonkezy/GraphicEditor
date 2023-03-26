@@ -16,5 +16,10 @@
 		<Setter	Property="HorizontalAlignment" Value="Stretch"/>
 		<Setter Property="HorizontalContentAlignment" Value="Center"/>
 	</Style>
+	<Style Selector="TextBlock">
+		<Setter	Property="VerticalAlignment" Value="Center"/>
+		<Setter Property="HorizontalAlignment" Value="Left"/>
+		<Setter Property="FontSize" Value="14"></Setter>
+	</Style>
     <!-- Add Styles Here -->
 </Styles>

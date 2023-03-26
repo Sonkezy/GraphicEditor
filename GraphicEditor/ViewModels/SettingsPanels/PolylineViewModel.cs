@@ -11,37 +11,35 @@ using System.Threading.Tasks;
 
 namespace GraphicEditor.ViewModels.SettingsPanels
 {
-    public class StraightLineViewModel : ShapeViewModelBase 
+    public class PolylineViewModel : ShapeViewModelBase
     {
-        public string ViewName => "Прямая линия";
+        public string ViewName => "Ломаная линия";
         string name;
-        Point startPoint;
-        Point endPoint;
+        List<Point> points;
         ISolidColorBrush strokeColor;
         ushort strokeThickness;
         ObservableCollection<ISolidColorBrush> colors;
 
-        public StraightLineViewModel() 
+        public PolylineViewModel()
         {
             var brushes = typeof(Brushes).GetProperties().Select(brush => (ISolidColorBrush)brush.GetValue(brush));
             Colors = new ObservableCollection<ISolidColorBrush>(brushes);
             Name = "";
-            StartPoint = new Point(0, 0);
-            EndPoint = new Point(0, 0);
+            Points = new List<Point>();
             StrokeThickness = 1;
             StrokeColor = Colors[0];
 
         }
         public override PaintShape? GetShape()
         {
-            if(Name != "" && StrokeThickness > 0)
+            if (Name != "" && StrokeThickness > 0)
             {
-                if (StartPoint.Y != 0 && StartPoint.X != 0 || EndPoint.X != 0 && EndPoint.Y != 0)
+                if (Points.Count > 1)
                 {
-                    return new PaintStraightLine { 
+                    return new PaintPolyline
+                    {
                         Name = Name,
-                        StartPoint = StartPoint,
-                        EndPoint = EndPoint,
+                        Points = Points,
                         StrokeColor = StrokeColor.Color,
                         StrokeThickness = StrokeThickness
                     };
@@ -52,8 +50,7 @@ namespace GraphicEditor.ViewModels.SettingsPanels
         public override void ClearShape()
         {
             Name = "";
-            StartPoint = new Point(0, 0);
-            EndPoint = new Point(0, 0);
+            Points = new List<Point>();
             StrokeThickness = 1;
             StrokeColor = Colors[0];
         }
@@ -62,15 +59,10 @@ namespace GraphicEditor.ViewModels.SettingsPanels
             get => name;
             set => this.RaiseAndSetIfChanged(ref name, value);
         }
-        public Point StartPoint
+        public List<Point> Points
         {
-            get => startPoint;
-            set => this.RaiseAndSetIfChanged(ref startPoint, value);
-        }
-        public Point EndPoint
-        {
-            get => endPoint;
-            set => this.RaiseAndSetIfChanged(ref endPoint, value);
+            get => points;
+            set => this.RaiseAndSetIfChanged(ref points, value);
         }
         public ISolidColorBrush StrokeColor
         {

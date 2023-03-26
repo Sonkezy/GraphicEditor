@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GraphicEditor.ViewModels
+namespace GraphicEditor.ViewModels.Converters
 {
     public class StringToPointConverter : IValueConverter
     {

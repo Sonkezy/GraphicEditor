@@ -98,13 +98,29 @@ namespace GraphicEditor.ViewModels
                     XMLSerializer<ObservableCollection<PaintShape>>.Save(result, Shapes);
                 }
             });
-            LoadXML = ReactiveCommand.Create(() =>
+            LoadXML = ReactiveCommand.Create<MainWindow>(async (window) =>
             {
-                Shapes = XMLSerializer<ObservableCollection<PaintShape>>.Load("data.xml");
-                foreach (var shape in Shapes)
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Title = "Open xml file";
+                List<FileDialogFilter> filters = new List<FileDialogFilter>();
+                FileDialogFilter filter = new FileDialogFilter();
+                List<string> extension = new List<string>();
+                extension.Add("xml");
+                filter.Extensions = extension;
+                filter.Name = "Xml Files";
+                filters.Add(filter);
+                openFileDialog.Filters = filters;
+                openFileDialog.AllowMultiple = false;
+                string[]? result = await openFileDialog.ShowAsync(window);
+                if(result != null)
                 {
-                    shape.Deserialize();
+                    Shapes = XMLSerializer<ObservableCollection<PaintShape>>.Load(result[0]);
+                    foreach (var shape in Shapes)
+                    {
+                        shape.Deserialize();
+                    }
                 }
+                
             });
             SaveJSON = ReactiveCommand.Create<MainWindow>(async(window) =>
             {
@@ -126,9 +142,25 @@ namespace GraphicEditor.ViewModels
                 }
                 
             });
-            LoadJSON = ReactiveCommand.Create(() =>
+            LoadJSON = ReactiveCommand.Create<MainWindow>(async (window) =>
             {
-                Shapes = JSONSerializer<ObservableCollection<PaintShape>>.Load("data.json");
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Title = "Open json file";
+                List<FileDialogFilter> filters = new List<FileDialogFilter>();
+                FileDialogFilter filter = new FileDialogFilter();
+                List<string> extension = new List<string>();
+                extension.Add("json");
+                filter.Extensions = extension;
+                filter.Name = "Json Files";
+                filters.Add(filter);
+                openFileDialog.Filters = filters;
+                openFileDialog.AllowMultiple = false;
+                string[]? result = await openFileDialog.ShowAsync(window);
+                if (result != null)
+                {
+                    Shapes = JSONSerializer<ObservableCollection<PaintShape>>.Load(result[0]);
+                }
+                    
             });
             SavePNG = ReactiveCommand.Create<MainWindow>(async (window) =>
             {
@@ -193,7 +225,7 @@ namespace GraphicEditor.ViewModels
         public ReactiveCommand<MainWindow, Unit> SavePNG { get; }
         public ReactiveCommand<MainWindow, Unit> SaveJSON { get; }
         public ReactiveCommand<MainWindow, Unit> SaveXML { get; }
-        public ReactiveCommand<Unit, Unit> LoadJSON { get; }
-        public ReactiveCommand<Unit, Unit> LoadXML { get; }
+        public ReactiveCommand<MainWindow, Unit> LoadJSON { get; }
+        public ReactiveCommand<MainWindow, Unit> LoadXML { get; }
     }
 }

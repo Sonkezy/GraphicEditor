@@ -28,8 +28,8 @@
 					<MenuItem Header="Экспортировать в XML" Command="{Binding SaveXML}" CommandParameter="{Binding $parent[Window]}"/>
 				</MenuItem>
 				<MenuItem Name="menuImport" Header="Импортировать">
-					<MenuItem Header="Импортировать из JSON" Command="{Binding LoadJSON}"/>
-					<MenuItem Header="Импортировать из XML" Command="{Binding LoadXML}"/>
+					<MenuItem Header="Импортировать из JSON" Command="{Binding LoadJSON}" CommandParameter="{Binding $parent[Window]}"/>
+					<MenuItem Header="Импортировать из XML" Command="{Binding LoadXML}" CommandParameter="{Binding $parent[Window]}"/>
 				</MenuItem>
 			</Menu>
 		</DockPanel>

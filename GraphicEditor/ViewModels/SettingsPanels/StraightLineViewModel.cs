@@ -20,7 +20,7 @@ namespace GraphicEditor.ViewModels.SettingsPanels
         ISolidColorBrush strokeColor;
         ushort strokeThickness;
         ObservableCollection<ISolidColorBrush> colors;
-
+        
         public StraightLineViewModel() 
         {
             var brushes = typeof(Brushes).GetProperties().Select(brush => (ISolidColorBrush)brush.GetValue(brush));
@@ -30,7 +30,10 @@ namespace GraphicEditor.ViewModels.SettingsPanels
             EndPoint = new Point(0, 0);
             StrokeThickness = 1;
             StrokeColor = Colors[0];
-
+            RotateAngle = 0;
+            RotateCenter= new Point(0, 0);
+            Scale = new Point(1, 1);
+            Skew = new Point(0, 0);
         }
         public override PaintShape? GetShape()
         {
@@ -38,12 +41,19 @@ namespace GraphicEditor.ViewModels.SettingsPanels
             {
                 if (StartPoint.Y != 0 && StartPoint.X != 0 || EndPoint.X != 0 && EndPoint.Y != 0)
                 {
+                    if(Scale.X == 0 || Scale.Y ==0)
+                    {
+                        Scale = new Point(1, 1);
+                    }
                     return new PaintStraightLine { 
                         Name = Name,
                         StartPoint = StartPoint,
                         EndPoint = EndPoint,
                         StrokeColor = StrokeColor.Color,
-                        StrokeThickness = StrokeThickness
+                        StrokeThickness = StrokeThickness,
+                        Rotate = new RotateTransform(RotateAngle,RotateCenter.X,RotateCenter.Y),
+                        Scale = new ScaleTransform(Scale.X,Scale.Y),
+                        Skew = new SkewTransform(Skew.X,Skew.Y),
                     };
                 }
             }
@@ -56,6 +66,10 @@ namespace GraphicEditor.ViewModels.SettingsPanels
             EndPoint = new Point(0, 0);
             StrokeThickness = 1;
             StrokeColor = Colors[0];
+            RotateAngle = 0;
+            RotateCenter = new Point(0, 0);
+            Scale = new Point(1, 1);
+            Skew = new Point(0,0);
         }
         public string Name
         {
@@ -93,5 +107,6 @@ namespace GraphicEditor.ViewModels.SettingsPanels
                 this.RaiseAndSetIfChanged(ref colors, value);
             }
         }
+        
     }
 }

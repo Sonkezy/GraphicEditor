@@ -19,7 +19,7 @@ namespace GraphicEditor.ViewModels.SettingsPanels
         ISolidColorBrush strokeColor;
         ushort strokeThickness;
         ObservableCollection<ISolidColorBrush> colors;
-
+        
         public PolylineViewModel()
         {
             var brushes = typeof(Brushes).GetProperties().Select(brush => (ISolidColorBrush)brush.GetValue(brush));
@@ -28,6 +28,10 @@ namespace GraphicEditor.ViewModels.SettingsPanels
             Points = new List<Point>();
             StrokeThickness = 1;
             StrokeColor = Colors[0];
+            RotateAngle = 0;
+            RotateCenter = new Point(0, 0);
+            Scale = new Point(1, 1);
+            Skew = new Point(0, 0);
 
         }
         public override PaintShape? GetShape()
@@ -36,12 +40,19 @@ namespace GraphicEditor.ViewModels.SettingsPanels
             {
                 if (Points.Count > 1)
                 {
+                    if (Scale.X == 0 || Scale.Y == 0)
+                    {
+                        Scale = new Point(1, 1);
+                    }
                     return new PaintPolyline
                     {
                         Name = Name,
                         Points = Points,
                         StrokeColor = StrokeColor.Color,
-                        StrokeThickness = StrokeThickness
+                        StrokeThickness = StrokeThickness,
+                        Rotate = new RotateTransform(RotateAngle, RotateCenter.X, RotateCenter.Y),
+                        Scale = new ScaleTransform(Scale.X, Scale.Y),
+                        Skew = new SkewTransform(Skew.X, Skew.Y),
                     };
                 }
             }
@@ -53,6 +64,10 @@ namespace GraphicEditor.ViewModels.SettingsPanels
             Points = new List<Point>();
             StrokeThickness = 1;
             StrokeColor = Colors[0];
+            RotateAngle = 0;
+            RotateCenter = new Point(0, 0);
+            Scale = new Point(1, 1);
+            Skew = new Point(0, 0);
         }
         public string Name
         {

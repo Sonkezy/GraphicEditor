@@ -20,7 +20,6 @@ namespace GraphicEditor.Models.Serializers
     {
         Point parsePoint(string? pointValue)
         {
-            Point point = new Point();
             string[] coords = pointValue.Split(',');
             if (coords.Length == 2)
             {
@@ -103,13 +102,42 @@ namespace GraphicEditor.Models.Serializers
                             string? endPointProperty = reader.GetString();
                             reader.Read();
                             string? endPointValue = reader.GetString();
+
+                            reader.Read();
+                            string? rotateCenterProperty = reader.GetString();
+                            reader.Read();
+                            string? rotateCenterValue = reader.GetString();
+
+                            reader.Read();
+                            string? rotateAngleProperty = reader.GetString();
+                            reader.Read();
+                            string? rotateAngleValue = reader.GetString();
+                            
+                            reader.Read();
+                            string? scaleProperty = reader.GetString();
+                            reader.Read();
+                            string? scaleValue = reader.GetString();
+
+                            reader.Read();
+                            string? skewProperty = reader.GetString();
+                            reader.Read();
+                            string? skewValue = reader.GetString();
+
+                            Point rotateCenter = parsePoint(rotateCenterValue);
+                            Point scale = parsePoint(scaleValue);
+                            Point skew = parsePoint(skewValue);
+
                             PaintStraightLine straightLine = new PaintStraightLine
                             {
                                 Name = nameValue,
                                 StrokeThickness = int.Parse(strokeThicknessValue),
                                 StrokeColor = Color.Parse(strokeColorValue),
                                 StartPoint = parsePoint(startPointValue),
-                                EndPoint = parsePoint(endPointValue)
+                                EndPoint = parsePoint(endPointValue),
+                                Rotate = new RotateTransform(double.Parse(rotateAngleValue), rotateCenter.X,rotateCenter.Y),
+                                Scale = new ScaleTransform(scale.X,scale.Y),
+                                Skew = new SkewTransform (skew.X,skew.Y),
+
                             };
                             shapes.Add(straightLine);
                         }
@@ -135,12 +163,39 @@ namespace GraphicEditor.Models.Serializers
                             reader.Read();
                             string? pointsValue = reader.GetString();
 
+                            reader.Read();
+                            string? rotateCenterProperty = reader.GetString();
+                            reader.Read();
+                            string? rotateCenterValue = reader.GetString();
+
+                            reader.Read();
+                            string? rotateAngleProperty = reader.GetString();
+                            reader.Read();
+                            string? rotateAngleValue = reader.GetString();
+
+                            reader.Read();
+                            string? scaleProperty = reader.GetString();
+                            reader.Read();
+                            string? scaleValue = reader.GetString();
+
+                            reader.Read();
+                            string? skewProperty = reader.GetString();
+                            reader.Read();
+                            string? skewValue = reader.GetString();
+
+                            Point rotateCenter = parsePoint(rotateCenterValue);
+                            Point scale = parsePoint(scaleValue);
+                            Point skew = parsePoint(skewValue);
+
                             PaintPolyline polyine = new PaintPolyline
                             {
                                 Name = nameValue,
                                 StrokeThickness = int.Parse(strokeThicknessValue),
                                 StrokeColor = Color.Parse(strokeColorValue),
-                                Points = parsePoints(pointsValue)
+                                Points = parsePoints(pointsValue),
+                                Rotate = new RotateTransform(double.Parse(rotateAngleValue), rotateCenter.X, rotateCenter.Y),
+                                Scale = new ScaleTransform(scale.X, scale.Y),
+                                Skew = new SkewTransform(skew.X, skew.Y),
                             };
                             shapes.Add(polyine);
                         }
@@ -171,13 +226,40 @@ namespace GraphicEditor.Models.Serializers
                             reader.Read();
                             string? pointsValue = reader.GetString();
 
+                            reader.Read();
+                            string? rotateCenterProperty = reader.GetString();
+                            reader.Read();
+                            string? rotateCenterValue = reader.GetString();
+
+                            reader.Read();
+                            string? rotateAngleProperty = reader.GetString();
+                            reader.Read();
+                            string? rotateAngleValue = reader.GetString();
+
+                            reader.Read();
+                            string? scaleProperty = reader.GetString();
+                            reader.Read();
+                            string? scaleValue = reader.GetString();
+
+                            reader.Read();
+                            string? skewProperty = reader.GetString();
+                            reader.Read();
+                            string? skewValue = reader.GetString();
+
+                            Point rotateCenter = parsePoint(rotateCenterValue);
+                            Point scale = parsePoint(scaleValue);
+                            Point skew = parsePoint(skewValue);
+
                             PaintPolygon polygon = new PaintPolygon
                             {
                                 Name = nameValue,
                                 StrokeThickness = int.Parse(strokeThicknessValue),
                                 StrokeColor = Color.Parse(strokeColorValue),
                                 FillColor = Color.Parse(fillColorValue),
-                                Points = parsePoints(pointsValue)
+                                Points = parsePoints(pointsValue),
+                                Rotate = new RotateTransform(double.Parse(rotateAngleValue), rotateCenter.X, rotateCenter.Y),
+                                Scale = new ScaleTransform(scale.X, scale.Y),
+                                Skew = new SkewTransform(skew.X, skew.Y),
                             };
                             shapes.Add(polygon);
                         }
@@ -218,6 +300,30 @@ namespace GraphicEditor.Models.Serializers
                             reader.Read();
                             string? startPointValue = reader.GetString();
 
+                            reader.Read();
+                            string? rotateCenterProperty = reader.GetString();
+                            reader.Read();
+                            string? rotateCenterValue = reader.GetString();
+
+                            reader.Read();
+                            string? rotateAngleProperty = reader.GetString();
+                            reader.Read();
+                            string? rotateAngleValue = reader.GetString();
+
+                            reader.Read();
+                            string? scaleProperty = reader.GetString();
+                            reader.Read();
+                            string? scaleValue = reader.GetString();
+
+                            reader.Read();
+                            string? skewProperty = reader.GetString();
+                            reader.Read();
+                            string? skewValue = reader.GetString();
+
+                            Point rotateCenter = parsePoint(rotateCenterValue);
+                            Point scale = parsePoint(scaleValue);
+                            Point skew = parsePoint(skewValue);
+
                             PaintRectangle rectangle = new PaintRectangle
                             {
                                 Name = nameValue,
@@ -227,6 +333,9 @@ namespace GraphicEditor.Models.Serializers
                                 Width = int.Parse(widthValue),
                                 Height = int.Parse(heightValue),
                                 StartPoint = parsePoint(startPointValue),
+                                Rotate = new RotateTransform(double.Parse(rotateAngleValue), rotateCenter.X, rotateCenter.Y),
+                                Scale = new ScaleTransform(scale.X, scale.Y),
+                                Skew = new SkewTransform(skew.X, skew.Y),
                             };
                             shapes.Add(rectangle);
                         }
@@ -267,6 +376,30 @@ namespace GraphicEditor.Models.Serializers
                             reader.Read();
                             string? startPointValue = reader.GetString();
 
+                            reader.Read();
+                            string? rotateCenterProperty = reader.GetString();
+                            reader.Read();
+                            string? rotateCenterValue = reader.GetString();
+
+                            reader.Read();
+                            string? rotateAngleProperty = reader.GetString();
+                            reader.Read();
+                            string? rotateAngleValue = reader.GetString();
+
+                            reader.Read();
+                            string? scaleProperty = reader.GetString();
+                            reader.Read();
+                            string? scaleValue = reader.GetString();
+
+                            reader.Read();
+                            string? skewProperty = reader.GetString();
+                            reader.Read();
+                            string? skewValue = reader.GetString();
+
+                            Point rotateCenter = parsePoint(rotateCenterValue);
+                            Point scale = parsePoint(scaleValue);
+                            Point skew = parsePoint(skewValue);
+
                             PaintEllipse ellipse = new PaintEllipse
                             {
                                 Name = nameValue,
@@ -276,6 +409,9 @@ namespace GraphicEditor.Models.Serializers
                                 Width = int.Parse(widthValue),
                                 Height = int.Parse(heightValue),
                                 StartPoint = parsePoint(startPointValue),
+                                Rotate = new RotateTransform(double.Parse(rotateAngleValue), rotateCenter.X, rotateCenter.Y),
+                                Scale = new ScaleTransform(scale.X, scale.Y),
+                                Skew = new SkewTransform(skew.X, skew.Y),
                             };
                             shapes.Add(ellipse);
                         }
@@ -306,6 +442,30 @@ namespace GraphicEditor.Models.Serializers
                             reader.Read();
                             string? commandValue = reader.GetString();
 
+                            reader.Read();
+                            string? rotateCenterProperty = reader.GetString();
+                            reader.Read();
+                            string? rotateCenterValue = reader.GetString();
+
+                            reader.Read();
+                            string? rotateAngleProperty = reader.GetString();
+                            reader.Read();
+                            string? rotateAngleValue = reader.GetString();
+
+                            reader.Read();
+                            string? scaleProperty = reader.GetString();
+                            reader.Read();
+                            string? scaleValue = reader.GetString();
+
+                            reader.Read();
+                            string? skewProperty = reader.GetString();
+                            reader.Read();
+                            string? skewValue = reader.GetString();
+
+                            Point rotateCenter = parsePoint(rotateCenterValue);
+                            Point scale = parsePoint(scaleValue);
+                            Point skew = parsePoint(skewValue);
+
                             PaintPath path = new PaintPath
                             {
                                 Name = nameValue,
@@ -313,7 +473,10 @@ namespace GraphicEditor.Models.Serializers
                                 StrokeColor = Color.Parse(strokeColorValue),
                                 FillColor = Color.Parse(fillColorValue),
                                 Data = Geometry.Parse(commandValue),
-                                Commands = commandValue
+                                Commands = commandValue,
+                                Rotate = new RotateTransform(double.Parse(rotateAngleValue), rotateCenter.X, rotateCenter.Y),
+                                Scale = new ScaleTransform(scale.X, scale.Y),
+                                Skew = new SkewTransform(skew.X, skew.Y),
                             };
                             shapes.Add(path);
                         }
@@ -422,9 +585,12 @@ namespace GraphicEditor.Models.Serializers
                     writer.WriteString("Commands", path.Commands);
                     //writer.WriteEndObject();
                 }
-
+                writer.WriteString("RotateCenter", shape.Rotate.CenterX.ToString() + "," + shape.Rotate.CenterY.ToString());
+                writer.WriteString("RotateAngle", shape.Rotate.Angle.ToString());
+                writer.WriteString("Skale", shape.Scale.ScaleX.ToString() + "," + shape.Scale.ScaleY.ToString());
+                writer.WriteString("Skew", shape.Skew.AngleX.ToString() + "," + shape.Skew.AngleY.ToString());
             }
-            
+
             //writer.WriteEndArray();
             writer.WriteEndObject();
         }

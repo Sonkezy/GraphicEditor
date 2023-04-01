@@ -23,6 +23,9 @@ namespace GraphicEditor.Models
         string name;
         int strokeThickness;
         Color strokeColor;
+        RotateTransform rotate;
+        ScaleTransform scale;
+        SkewTransform skew;
         public PaintShape()
         {
             name = "";
@@ -46,20 +49,56 @@ namespace GraphicEditor.Models
             get => strokeColor;
             set => strokeColor = value;
         }
+        [XmlIgnore]
+        public RotateTransform Rotate
+        {
+            get => rotate;
+            set => rotate = value;
+        }
+        [XmlIgnore]
+        public ScaleTransform Scale
+        {
+            get => scale;
+            set => scale = value;
+        }
+        [XmlIgnore]
+        public SkewTransform Skew
+        {
+            get => skew;
+            set => skew = value;
+        }
+        
         public byte colorA;
         public byte colorR;
         public byte colorG;
         public byte colorB;
+        public double rotateAngle;
+        public double rotateCenterX;
+        public double rotateCenterY;
+        public double scaleX;
+        public double scaleY;
+        public double skewX;
+        public double skewY;
         public virtual void Serialize()
         {
             colorA = StrokeColor.A;
             colorR = StrokeColor.R;
             colorG = StrokeColor.G;
             colorB = StrokeColor.B;
+            rotateAngle = Rotate.Angle;
+            rotateCenterX = Rotate.CenterX;
+            rotateCenterY = Rotate.CenterY;
+            scaleX = Scale.ScaleX;
+            scaleY = Scale.ScaleY;
+            skewX = Skew.AngleX;
+            skewY = Skew.AngleY;
         }
         public virtual void Deserialize()
         {
             StrokeColor = Color.FromArgb(colorA, colorR, colorG, colorB);
+            Rotate = new RotateTransform(rotateAngle, rotateCenterX, rotateCenterY);
+            Scale = new ScaleTransform(scaleX, scaleY);
+            Skew = new SkewTransform(skewX, skewY);
         }
     }
 }

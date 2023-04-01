@@ -19,6 +19,9 @@ namespace GraphicEditor.Models
         {
             startPoint = new Point(0, 0);
             endPoint = new Point(0, 0);
+            Rotate = new RotateTransform(0);
+            Scale = new ScaleTransform(1, 1);
+            Skew = new SkewTransform(0,0);
         }
         [XmlIgnore]
         public Point StartPoint
@@ -43,6 +46,13 @@ namespace GraphicEditor.Models
             colorR = StrokeColor.R;
             colorG = StrokeColor.G;
             colorB = StrokeColor.B;
+            rotateAngle = Rotate.Angle;
+            rotateCenterX = Rotate.CenterX;
+            rotateCenterY = Rotate.CenterY;
+            scaleX = Scale.ScaleX;
+            scaleY = Scale.ScaleY;
+            skewX = Skew.AngleX;
+            skewY = Skew.AngleY;
             startPointX = startPoint.X;
             startPointY = startPoint.Y;
             endPointX= endPoint.X;
@@ -51,6 +61,9 @@ namespace GraphicEditor.Models
         public override void Deserialize()
         {
             StrokeColor = Color.FromArgb(colorA, colorR, colorG, colorB);
+            Rotate = new RotateTransform(rotateAngle, rotateCenterX, rotateCenterY);
+            Scale = new ScaleTransform(scaleX, scaleY);
+            Skew = new SkewTransform(skewX, skewY);
             StartPoint = new Point(startPointX, startPointY);
             EndPoint = new Point(endPointX, endPointY);
         }

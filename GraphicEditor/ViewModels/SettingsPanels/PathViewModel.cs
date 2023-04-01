@@ -29,6 +29,10 @@ namespace GraphicEditor.ViewModels.SettingsPanels
             StrokeThickness = 1;
             StrokeColor = Colors[0];
             FillColor = Colors[0];
+            RotateAngle = 0;
+            RotateCenter = new Point(0, 0);
+            Scale = new Point(1, 1);
+            Skew = new Point(0, 0);
 
         }
         public override PaintShape? GetShape()
@@ -37,6 +41,10 @@ namespace GraphicEditor.ViewModels.SettingsPanels
             {
                 if (Commands.Length > 0)
                 {
+                    if (Scale.X == 0 || Scale.Y == 0)
+                    {
+                        Scale = new Point(1, 1);
+                    }
                     return new PaintPath
                     {
                         Name = Name,
@@ -45,6 +53,9 @@ namespace GraphicEditor.ViewModels.SettingsPanels
                         FillColor = FillColor.Color,
                         StrokeColor = StrokeColor.Color,
                         StrokeThickness = StrokeThickness,
+                        Rotate = new RotateTransform(RotateAngle, RotateCenter.X, RotateCenter.Y),
+                        Scale = new ScaleTransform(Scale.X, Scale.Y),
+                        Skew = new SkewTransform(Skew.X, Skew.Y),
                     };
                 }
             }
@@ -53,10 +64,14 @@ namespace GraphicEditor.ViewModels.SettingsPanels
         public override void ClearShape()
         {
             Name = "";
-            commands = "";
+            Commands = "";
             StrokeThickness = 1;
             StrokeColor = Colors[0];
             FillColor = Colors[0];
+            RotateAngle = 0;
+            RotateCenter = new Point(0, 0);
+            Scale = new Point(1, 1);
+            Skew = new Point(0, 0);
         }
         public string Name
         {
@@ -97,5 +112,6 @@ namespace GraphicEditor.ViewModels.SettingsPanels
                 this.RaiseAndSetIfChanged(ref colors, value);
             }
         }
+        
     }
 }

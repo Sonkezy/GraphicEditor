@@ -13,6 +13,11 @@ namespace GraphicEditor.ViewModels.Converters
     {
         public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
+            /*if(value is Point point)
+            {
+                string stringPoint = point.ToString();
+                return stringPoint;
+            }*/
             return string.Empty;
         }
 

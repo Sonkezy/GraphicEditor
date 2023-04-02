@@ -80,7 +80,7 @@ namespace GraphicEditor.Models
             {
                 if (Commands[i] > 64 && Commands[i] < 91)
                 {
-                    for(int j = i+1; j < Commands.Length; j++)
+                    for(int j = i+1; j < Commands.Length-1; j++)
                     {
                         if (Commands[j] > 57)
                         {

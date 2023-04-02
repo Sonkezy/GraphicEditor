@@ -47,8 +47,8 @@ namespace GraphicEditor.Models
             skewY = Skew.AngleY;
             foreach (var point in points)
             {
-                pointsX.Add(point.X);
-                pointsY.Add(point.Y);
+                pointsX.Add((int)point.X);
+                pointsY.Add((int)point.Y);
             }
         }
         public override void Deserialize()

@@ -54,10 +54,10 @@ namespace GraphicEditor.Models
             scaleY = Scale.ScaleY;
             skewX = Skew.AngleX;
             skewY = Skew.AngleY;
-            startPointX = startPoint.X;
-            startPointY = startPoint.Y;
-            endPointX= endPoint.X;
-            endPointY = endPoint.Y;
+            startPointX = (int)startPoint.X;
+            startPointY = (int)startPoint.Y;
+            endPointX= (int)endPoint.X;
+            endPointY = (int)endPoint.Y;
         }
         public override void Deserialize()
         {

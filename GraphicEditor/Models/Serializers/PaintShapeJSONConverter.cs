@@ -506,8 +506,8 @@ namespace GraphicEditor.Models.Serializers
                     writer.WriteString("Name", line.Name);
                     writer.WriteString("StrokeThickness", line.StrokeThickness.ToString());
                     writer.WriteString("StrokeColor", line.StrokeColor.ToString());
-                    writer.WriteString("StartPoint", line.StartPoint.X.ToString() + "," + line.StartPoint.Y.ToString());
-                    writer.WriteString("EndPoint", line.EndPoint.X.ToString() + "," + line.EndPoint.Y.ToString());
+                    writer.WriteString("StartPoint", ((int)(line.StartPoint.X)).ToString() + "," + ((int)line.StartPoint.Y).ToString());
+                    writer.WriteString("EndPoint", ((int)line.EndPoint.X).ToString() + "," + ((int)line.EndPoint.Y).ToString());
                     //writer.WriteEndObject();
                 }
                 if (shape is PaintPolyline polyline)
@@ -527,7 +527,7 @@ namespace GraphicEditor.Models.Serializers
                     string points = "";
                     foreach (var point in polyline.Points)
                     {
-                        points += point.X.ToString() + "," + point.Y.ToString() + " ";
+                        points += ((int)point.X).ToString() + "," + ((int)point.Y).ToString() + " ";
                     }
                     writer.WriteString("Points", points);
                     //writer.WriteEndObject();
@@ -543,7 +543,7 @@ namespace GraphicEditor.Models.Serializers
                     string points = "";
                     foreach (var point in polygon.Points)
                     {
-                        points += point.X.ToString() + "," + point.Y.ToString() + " ";
+                        points += ((int)point.X).ToString() + "," + ((int)point.Y).ToString() + " ";
                     }
                     writer.WriteString("Points", points);
                     //writer.WriteEndObject();
@@ -558,7 +558,7 @@ namespace GraphicEditor.Models.Serializers
                     writer.WriteString("FillColor", rectangle.FillColor.ToString());
                     writer.WriteString("Width", rectangle.Width.ToString());
                     writer.WriteString("Height", rectangle.Height.ToString());
-                    writer.WriteString("StartPoint", rectangle.StartPoint.X.ToString() + "," + rectangle.StartPoint.Y.ToString());
+                    writer.WriteString("StartPoint", ((int)rectangle.StartPoint.X).ToString() + "," + ((int)rectangle.StartPoint.Y).ToString());
                     //writer.WriteEndObject();
                 }
                 if (shape is PaintEllipse ellipse)
@@ -571,7 +571,7 @@ namespace GraphicEditor.Models.Serializers
                     writer.WriteString("FillColor", ellipse.FillColor.ToString());
                     writer.WriteString("Width", ellipse.Width.ToString());
                     writer.WriteString("Height", ellipse.Height.ToString());
-                    writer.WriteString("StartPoint", ellipse.StartPoint.X.ToString() + "," + ellipse.StartPoint.Y.ToString());
+                    writer.WriteString("StartPoint", ((int)ellipse.StartPoint.X).ToString() + "," + ((int)ellipse.StartPoint.Y).ToString());
                     //writer.WriteEndObject();
                 }
                 if (shape is PaintPath path)

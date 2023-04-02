@@ -3,6 +3,7 @@ using Avalonia.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
@@ -61,8 +62,8 @@ namespace GraphicEditor.Models
             fillColorB = FillColor.B;
             foreach (var point in points)
             {
-                pointsX.Add(point.X);
-                pointsY.Add(point.Y);
+                pointsX.Add((int)point.X);
+                pointsY.Add((int)point.Y);
             }
         }
         public override void Deserialize()

@@ -71,8 +71,8 @@ namespace GraphicEditor.Models
             fillColorR = FillColor.R;
             fillColorG = FillColor.G;
             fillColorB = FillColor.B;
-            startPointX = startPoint.X;
-            startPointY = startPoint.Y;
+            startPointX = (int)startPoint.X;
+            startPointY = (int)startPoint.Y;
         }
         public override void Deserialize()
         {

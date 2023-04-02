@@ -1,5 +1,6 @@
 ﻿using Avalonia;
 using Avalonia.Media;
+using DynamicData.Binding;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace GraphicEditor.Models
     [XmlInclude(typeof(PaintRectangle))]
     [XmlInclude(typeof(PaintEllipse))]
     [XmlInclude(typeof(PaintPath))]
-    public class PaintShape
+    public abstract class PaintShape : AbstractNotifyPropertyChanged
     {
         string name;
         int strokeThickness;
@@ -100,5 +101,6 @@ namespace GraphicEditor.Models
             Scale = new ScaleTransform(scaleX, scaleY);
             Skew = new SkewTransform(skewX, skewY);
         }
+        public virtual void Move(Point posistion) { }
     }
 }

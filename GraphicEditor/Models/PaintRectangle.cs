@@ -29,7 +29,7 @@ namespace GraphicEditor.Models
         public Point StartPoint
         {
             get => startPoint;
-            set => startPoint = value;
+            set => SetAndRaise(ref startPoint, value);
         }
         [XmlIgnore]
         public Color FillColor
@@ -83,6 +83,11 @@ namespace GraphicEditor.Models
             Skew = new SkewTransform(skewX, skewY);
             FillColor = Color.FromArgb(fillColorA, fillColorR, fillColorG, fillColorB);
             StartPoint = new Point(startPointX, startPointY);
+        }
+        public override void Move(Point position)
+        {
+            StartPoint = position;
+
         }
     }
 }

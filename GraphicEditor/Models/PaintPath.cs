@@ -27,7 +27,7 @@ namespace GraphicEditor.Models
         public Geometry Data
         {
             get => data;
-            set => data = value;
+            set => SetAndRaise(ref data, value);
         }
         [XmlIgnore]
         public Color FillColor
@@ -44,7 +44,7 @@ namespace GraphicEditor.Models
         public string Commands
         {
             get => commands;
-            set => commands = value;
+            set => SetAndRaise(ref commands, value);
         }
         public override void Serialize()
         {
@@ -73,6 +73,55 @@ namespace GraphicEditor.Models
             Skew = new SkewTransform(skewX, skewY);
             FillColor = Color.FromArgb(fillColorA, fillColorR, fillColorG, fillColorB);
             Data = Geometry.Parse(Commands);
+        }
+        public override void Move(Point position)
+        {
+            for(int i=0; i < Commands.Length-1;i++)
+            {
+                if (Commands[i] > 64 && Commands[i] < 91)
+                {
+                    for(int j = i+1; j < Commands.Length; j++)
+                    {
+                        if (Commands[j] > 57)
+                        {
+                            string stringPoints = Commands.Substring(i + 2, j - i - 3);
+                            string[] pointsValue = stringPoints.Split(' ');
+                            List<Point> listPoints = new List<Point>();
+
+                            foreach (string s in pointsValue)
+                            {
+                                string[] coords = s.Split(',');
+                                if (coords.Length == 2)
+                                {
+                                    double X;
+                                    double Y;
+                                    if (double.TryParse(coords[0], out X) == true &&
+                                        double.TryParse(coords[1], out Y) == true)
+                                    {
+                                        listPoints.Add(new Point(X, Y));
+                                    }
+                                }
+                            }
+                            List<Point> shiftPoints = new List<Point>();
+                            for (int k = 0; k < listPoints.Count; k++)
+                            {
+                                shiftPoints.Insert(k, new Point(listPoints[0].X - listPoints[k].X, listPoints[0].Y - listPoints[k].Y));
+                            }
+                            for (int k = 0; k < listPoints.Count; k++)
+                            {
+                                shiftPoints[k] = position - shiftPoints[k];
+                            }
+                            string stringShiftPoints = "";
+                            foreach (Point point in shiftPoints)
+                            {
+                                stringShiftPoints += ((int)point.X).ToString() + "," + ((int)point.Y).ToString() + " ";
+                            }
+                            Commands = Commands.Substring(0, i+1) + " " + stringShiftPoints + Commands.Substring(j,Commands.Length-j);
+                            Data = Geometry.Parse(Commands);
+                        }
+                    }
+                }
+            }
         }
     }
 }

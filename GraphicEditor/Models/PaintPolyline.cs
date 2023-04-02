@@ -28,7 +28,7 @@ namespace GraphicEditor.Models
         public List<Point> Points
         {
             get => points;
-            set => points = value;
+            set => SetAndRaise(ref points, value);
         }
         public List<double> pointsX;
         public List<double> pointsY;
@@ -62,6 +62,20 @@ namespace GraphicEditor.Models
             {
                 points.Add(new Point(pointsX[i], pointsY[i]));
             }
+        }
+        public override void Move(Point position)
+        {
+            List<Point> shiftPoints = new List<Point>();
+            for(int i = 0; i < Points.Count; i++)
+            {
+                shiftPoints.Insert(i, new Point(Points[0].X - Points[i].X, Points[0].Y - Points[i].Y));
+            }
+            for(int i = 0; i < Points.Count; i++)
+            {
+                shiftPoints[i] = position - shiftPoints[i];
+            }
+            Points = shiftPoints;
+
         }
     }
 }

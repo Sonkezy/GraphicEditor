@@ -1,5 +1,6 @@
 ﻿using Avalonia;
 using Avalonia.Media;
+using DynamicData.Binding;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,13 +28,13 @@ namespace GraphicEditor.Models
         public Point StartPoint
         {
             get => startPoint;
-            set => startPoint = value;
+            set => SetAndRaise(ref startPoint, value);
         }
         [XmlIgnore]
         public Point EndPoint
         {
             get => endPoint;
-            set => endPoint = value;
+            set => SetAndRaise(ref endPoint, value);
         }
 
         public double startPointX;
@@ -66,6 +67,13 @@ namespace GraphicEditor.Models
             Skew = new SkewTransform(skewX, skewY);
             StartPoint = new Point(startPointX, startPointY);
             EndPoint = new Point(endPointX, endPointY);
+        }
+        public override void Move(Point position)
+        {
+            Point shiftEndPoint = new Point(StartPoint.X - EndPoint.X, StartPoint.Y - EndPoint.Y);
+            StartPoint = position;
+            EndPoint = position - shiftEndPoint;
+
         }
     }
 }

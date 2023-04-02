@@ -192,6 +192,27 @@ namespace GraphicEditor.ViewModels
                 
             });
         }
+        public void LoadShapes(string path)
+        {
+            if (".xml".Equals(System.IO.Path.GetExtension(path)))
+            {
+                Shapes = XMLSerializer<ObservableCollection<PaintShape>>.Load(path);
+                foreach (var shape in Shapes)
+                {
+                    shape.Deserialize();
+                }
+            }
+            if (".json".Equals(System.IO.Path.GetExtension(path)))
+            {
+                Shapes = JSONSerializer<ObservableCollection<PaintShape>>.Load(path);
+            }
+            
+        }
+        public void Update(PaintShape shape)
+        {
+            Shapes.Remove(shape);
+            Shapes.Add(shape);
+        }
         public ObservableCollection<PaintShape> Shapes
         {
             get => shapes;

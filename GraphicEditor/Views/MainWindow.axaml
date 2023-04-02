@@ -8,7 +8,8 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="GraphicEditor.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
-        Title="GraphicEditor">
+        Title="GraphicEditor"
+		DragDrop.AllowDrop="True">
 
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
@@ -57,7 +58,7 @@
 			</Grid>	
 		</Border>
 		<Border Grid.Row="1" Grid.Column="1" BorderThickness="1" BorderBrush="Black">
-			<ItemsControl Items="{Binding Shapes}">
+			<ItemsControl Items="{Binding Shapes}" PointerPressed="PointerPressedOnCanvas">
 				<ItemsControl.ItemsPanel>
 					<ItemsPanelTemplate>
 						<Canvas Name="canvas" Width="{Binding $parent.Width}" Height="{Binding $parent.Height}"/>
